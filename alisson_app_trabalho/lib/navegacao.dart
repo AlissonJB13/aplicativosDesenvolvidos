@@ -17,8 +17,8 @@ class _NavegacaoState extends State<Navegacao> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("App com Abas"),
-        backgroundColor: Colors.purple[400],
+        //title: const Text("App com Abas"),
+        backgroundColor: Colors.orange[200],
       ),
       body: telas[_indiceAtual],
       bottomNavigationBar: BottomNavigationBar(
@@ -29,7 +29,7 @@ class _NavegacaoState extends State<Navegacao> {
             });
           },
           type: BottomNavigationBarType.fixed,
-          fixedColor: Colors.purple[600],
+          fixedColor: Colors.orange[200],
           items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.house_siding_outlined), label: "Inicio"),

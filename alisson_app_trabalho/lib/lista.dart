@@ -128,14 +128,14 @@ class _ListaState extends State<Lista> {
     });
   }
 
-  void _voltarHome() {
+  /*void _voltarHome() {
     Navigator.pop(
         context, MaterialPageRoute(builder: (context) => const Home()));
-  }
+  }*/
 
-  void _sair() {
+  /*void _sair() {
     SystemNavigator.pop();
-  }
+  }*/
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,7 +156,7 @@ class _ListaState extends State<Lista> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: const Text("Adicionar tarefa"),
+                title: const Text("Adicionar Pokémon Card"),
                 content: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -169,7 +169,7 @@ class _ListaState extends State<Lista> {
                       TextFormField(
                         controller: _controllerDescricao,
                         decoration: const InputDecoration(
-                            labelText: "Pequena Descrição"),
+                            labelText: "Tipo, Ataque, Defesa"),
                         onChanged: (text) {},
                       ),
                     ],

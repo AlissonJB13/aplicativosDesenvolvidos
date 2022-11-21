@@ -43,36 +43,39 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(
-          'imagens/pokebola.png',
-          height: 50,
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.deepOrange,
-        bottom: TabBar(
-          indicatorColor: Colors.white,
-          indicatorWeight: 2,
-          labelStyle:
-              const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          controller: _tabController,
-          tabs: const [
-            Tab(
-              //text: "Cadastro",
-              icon: Icon(Icons.house_siding_outlined),
-            ),
-            Tab(
-              //text: "Visualizar",
-              icon: Icon(Icons.list_alt),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(120),
+        child: AppBar(
+          title: Image.asset(
+            'imagens/pokebola.png',
+            height: 50,
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.deepOrange,
+          bottom: TabBar(
+            indicatorColor: Colors.white,
+            indicatorWeight: 2,
+            labelStyle:
+                const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            controller: _tabController,
+            tabs: const [
+              Tab(
+                //text: "Cadastro",
+                icon: Icon(Icons.house_siding_outlined),
+              ),
+              Tab(
+                //text: "Visualizar",
+                icon: Icon(Icons.list_alt),
+              ),
+            ],
+          ),
+          actions: [
+            IconButton(
+              onPressed: _sair,
+              icon: Icon(Icons.exit_to_app),
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            onPressed: _sair,
-            icon: Icon(Icons.exit_to_app),
-          ),
-        ],
       ),
       body: TabBarView(controller: _tabController, children: const [
         Inicio(),
