@@ -96,6 +96,16 @@ class _InicioState extends State<Inicio> {
             Padding(
               padding: EdgeInsets.all(10.0),
               child: const Text(
+                '- No botão "?" você consegue testar seus conhecimentos com um quiz sobre o Mundo Pokémon;',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: const Text(
                 '- Se divirta e se precisar entre em contato conosco: gerpokedex@pokemonworld.com.',
                 textAlign: TextAlign.justify,
                 style: TextStyle(

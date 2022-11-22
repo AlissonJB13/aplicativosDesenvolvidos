@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'adicionar.dart';
+import 'quiz.dart';
 import 'inicio.dart';
 import 'lista.dart';
 
@@ -20,7 +20,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   // liberar memoria
@@ -54,7 +54,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           backgroundColor: Colors.deepOrange,
           bottom: TabBar(
             indicatorColor: Colors.white,
-            indicatorWeight: 2,
+            indicatorWeight: 3,
             labelStyle:
                 const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             controller: _tabController,
@@ -67,6 +67,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 //text: "Visualizar",
                 icon: Icon(Icons.list_alt),
               ),
+              Tab(icon: Icon(Icons.question_mark))
             ],
           ),
           actions: [
@@ -80,6 +81,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: TabBarView(controller: _tabController, children: const [
         Inicio(),
         Lista(),
+        Quiz(),
       ]),
     );
   }

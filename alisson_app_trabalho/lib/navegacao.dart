@@ -1,3 +1,4 @@
+import 'package:alisson_app_trabalho/quiz.dart';
 import 'package:alisson_app_trabalho/inicio.dart';
 import 'package:alisson_app_trabalho/lista.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class Navegacao extends StatefulWidget {
 
 class _NavegacaoState extends State<Navegacao> {
   int _indiceAtual = 0;
-  List<Widget> telas = const [Inicio(), Lista()];
+  List<Widget> telas = const [Inicio(), Lista(), Quiz()];
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,8 @@ class _NavegacaoState extends State<Navegacao> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.house_siding_outlined), label: "Inicio"),
             BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "Lista"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.question_mark), label: "Lista"),
           ]),
     );
   }
