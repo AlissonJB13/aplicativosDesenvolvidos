@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class Pergunta3 extends StatefulWidget {
@@ -10,20 +12,26 @@ class Pergunta3 extends StatefulWidget {
 class _Pergunta3State extends State<Pergunta3> {
   String? _escolhaUsuario = "";
   String? _resultado = "";
-  //Image _imageWid;
+  Image? _img;
 
   void _respostaUsuario() {
     if (_escolhaUsuario == "") {
       setState(() {
         _resultado = 'Selecione uma das opções';
+        _img = Image.asset("imagens/confuso.jpg");
       });
     } else if (_escolhaUsuario == "EPL") {
       setState(() {
         _resultado = "Alternativa Correta!!!!!!";
+        _img = Image.asset("imagens/acertou.png");
       });
+      /*setState(() {
+         as FileImage?;
+      });*/
     } else {
       setState(() {
         _resultado = "Errou!!";
+        _img = Image.asset("imagens/errou.png");
       });
     }
   }
@@ -47,7 +55,7 @@ class _Pergunta3State extends State<Pergunta3> {
           Padding(
             padding: EdgeInsets.all(10),
             child: const Text(
-              "Qual as maiores fraquezas de um Pokémon tipo água?",
+              "Quais as maiores fraquezas de um Pokémon tipo água?",
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
@@ -114,6 +122,12 @@ class _Pergunta3State extends State<Pergunta3> {
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Center(
+              child: _img,
             ),
           ),
           /*Padding(

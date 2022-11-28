@@ -11,20 +11,23 @@ class Pergunta1 extends StatefulWidget {
 class _Pergunta1State extends State<Pergunta1> {
   String? _escolhaUsuario = "";
   String? _resultado = "";
-  //Image _imageWid;
+  Image? _img;
 
   void _respostaUsuario() {
     if (_escolhaUsuario == "") {
       setState(() {
         _resultado = 'Selecione uma das opções';
+        _img = Image.asset("imagens/confuso.jpg");
       });
     } else if (_escolhaUsuario == "P") {
       setState(() {
         _resultado = "Alternativa Correta!!!!!!";
+        _img = Image.asset("imagens/acertou.png");
       });
     } else {
       setState(() {
         _resultado = "Errou!!";
+        _img = Image.asset("imagens/errou.png");
       });
     }
   }
@@ -115,6 +118,12 @@ class _Pergunta1State extends State<Pergunta1> {
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Center(
+              child: _img,
             ),
           ),
           /*Padding(

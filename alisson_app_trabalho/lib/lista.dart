@@ -14,16 +14,10 @@ class Lista extends StatefulWidget {
 }
 
 class _ListaState extends State<Lista> {
-//mostrar lista dos pokemons
-//adicionar pokemon
-//mostrar nome, tipo, ataque principal, ataque e defesa
-
-  @override
   List _listaPokemons = [];
   Map<String, dynamic> _ultimoPokemon = Map();
   TextEditingController _controllerNome = TextEditingController();
   TextEditingController _controllerDescricao = TextEditingController();
-  //TextEditingController _controllerDescricao = TextEditingController();
 
   Future<File> _getArquivo() async {
     final diretorio = await getApplicationDocumentsDirectory();
@@ -33,12 +27,10 @@ class _ListaState extends State<Lista> {
   _salvarPokemon() {
     String nomeDigitado = _controllerNome.text;
     String descricaoDigitada = _controllerDescricao.text;
-    //String descricaoTexto = _controllerDescricao.text;
     Map<String, dynamic> pokemon = Map();
 
     pokemon["titulo"] = nomeDigitado;
     pokemon["texto"] = descricaoDigitada;
-    //tarefa["descricao"] = descricaoTexto;
     pokemon["tenho"] = false;
 
     setState(() {
@@ -46,6 +38,7 @@ class _ListaState extends State<Lista> {
     });
     _salvarArquivo();
     _controllerNome.text = "";
+    _controllerDescricao.text = "";
   }
 
   _salvarArquivo() async {
