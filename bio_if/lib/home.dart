@@ -3,6 +3,7 @@ import 'package:bio_if/especies.dart';
 import 'package:bio_if/postagem.dart';
 import 'package:bio_if/sobre.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -114,12 +115,12 @@ class _HomeState extends State<Home> {
                         itemCount: snap.length,
                         itemBuilder: (context, index) {
                           return Container(
-                            height: 70,
+                            height: 500,
                             width: double.infinity,
-                            margin: const EdgeInsets.only(bottom: 12),
+                            margin: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.zero,
                               boxShadow: const [
                                 BoxShadow(
                                   color: Colors.black26,
@@ -128,10 +129,10 @@ class _HomeState extends State<Home> {
                                 ),
                               ],
                             ),
-                            child: Stack(
+                            child: Column(
                               children: [
                                 Container(
-                                  margin: const EdgeInsets.only(left: 20),
+                                  margin: const EdgeInsets.all(5),
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     snap[index]['nome'],
@@ -142,15 +143,21 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                                 Container(
-                                  margin: const EdgeInsets.only(right: 20),
-                                  alignment: Alignment.centerRight,
+                                  margin: const EdgeInsets.all(5),
+                                  alignment: Alignment.centerLeft,
                                   child: Text(
-                                    "\$${snap[index]['descricao']}",
+                                    "${snap[index]['descricao']}",
                                     style: TextStyle(
                                       color: Colors.green.withOpacity(0.7),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.all(20),
+                                  alignment: Alignment.centerRight,
+                                  child: Image.network(
+                                      "https://firebasestorage.googleapis.com/v0/b/bioif-39a18.appspot.com/o/fotos%2F1672700649487?alt=media&token=79f77718-31fd-49b2-900f-704db537956a"),
                                 ),
                               ],
                             ),
