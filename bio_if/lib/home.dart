@@ -155,9 +155,10 @@ class _HomeState extends State<Home> {
                                 ),
                                 Container(
                                   margin: const EdgeInsets.all(20),
-                                  alignment: Alignment.centerRight,
+                                  alignment: Alignment.center,
                                   child: Image.network(
-                                      "https://firebasestorage.googleapis.com/v0/b/bioif-39a18.appspot.com/o/fotos%2F1672700649487?alt=media&token=79f77718-31fd-49b2-900f-704db537956a"),
+                                    snap[index]['foto'],
+                                  ),
                                 ),
                               ],
                             ),
