@@ -4,10 +4,19 @@ class Postagem {
   String? nome;
   String? descricao;
   String? tipo;
-  DateTime? dataHora;
+  String? dataHora;
   String? foto;
+  int? like;
+  int? dislike;
 
-  Postagem({this.nome, this.descricao, this.tipo, this.dataHora, this.foto});
+  Postagem(
+      {this.nome,
+      this.descricao,
+      this.tipo,
+      this.dataHora,
+      this.foto,
+      this.like,
+      this.dislike});
 
   Map<String, dynamic> toMap() {
     return {
@@ -17,7 +26,9 @@ class Postagem {
       if (descricao != null) "descricao": descricao,
       if (tipo != null) "tipo": tipo,
       if (dataHora != null) "data e hora": dataHora,
-      if (foto != null) "foto": foto
+      if (foto != null) "foto": foto,
+      if (like != null) "like": like,
+      if (dislike != null) "dislike": dislike
     };
   }
 

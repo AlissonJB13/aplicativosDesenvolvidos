@@ -33,10 +33,11 @@ class _EspeciesState extends State<Especies> {
   String? _campoSelecionado = "";
   String _resultado = "";
   XFile? _arquivoImagem;
-  DateTime dataHora = DateTime.now();
+  String? dataHora = DateTime.now().toString();
   var db = FirebaseFirestore.instance;
   String? _urlImagem = null;
   String? _status = "Postagem não realizada";
+  int? contagem = 0;
 
   Future _capturaFoto(bool daCamera) async {
     final ImagePicker picker = ImagePicker();
@@ -95,6 +96,7 @@ class _EspeciesState extends State<Especies> {
   Future _recuperarImagem(TaskSnapshot taskSnapshot) async {
     String url = await taskSnapshot.ref.getDownloadURL();
     print("URL: $url");
+
     setState(() {
       _urlImagem = url;
     });
@@ -106,7 +108,9 @@ class _EspeciesState extends State<Especies> {
         descricao: _controllerDescricao.text,
         tipo: _resultado,
         dataHora: dataHora,
-        foto: _urlImagem);
+        foto: _urlImagem,
+        like: contagem,
+        dislike: contagem);
 
     db.collection("Postagem").add(postagem.toMap());
   }
@@ -188,6 +192,7 @@ class _EspeciesState extends State<Especies> {
                 onPressed: () {
                   _postagem();
                 },
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),
                 child: const Text("Enviar"),
               ),
               Text(_status!),
