@@ -23,7 +23,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  //List<Object> _postagemLista = [];
   var db = FirebaseFirestore.instance;
+  final _controller = StreamController<QuerySnapshot>.broadcast();
+  int count = 0;
   String? _statusLogin = "";
   List<String> itensMenu = [
     "Login",
@@ -71,14 +74,11 @@ class _HomeState extends State<Home> {
       var usuarioAtual = await auth.currentUser;
       if (usuarioAtual != null) {
         setState(() {
-          _statusLogin = "${usuarioAtual.displayName}";
+          _statusLogin = "Usuário logado: ${usuarioAtual.email}";
         });
       }
-      print("${usuarioAtual!.email}");
     } catch (e) {
-      setState(() {
-        _statusLogin = "Usuário não logado";
-      });
+      _statusLogin = "Usuário não logado";
     }
   }
 
@@ -95,15 +95,33 @@ class _HomeState extends State<Home> {
         .update({"dislike": FieldValue.increment(1)});
   }
 
+  Stream<QuerySnapshot>? _adicionarListenerPostagem() {
+    final stream = db
+        .collection("Postagem")
+        .orderBy("data", descending: false)
+        .snapshots();
+
+    stream.listen((dados) {
+      _controller.add(dados);
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _adicionarListenerPostagem();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 04, 82, 37),
+          backgroundColor: Colors.teal,
           iconTheme: const IconThemeData(
             color: Colors.white,
           ),
-          title: Text("Bio IF - $_statusLogin!"),
+          title: Text("Bio IF - "),
           /*Image.asset(
           'imagens/logo.png',
           height: 22,
@@ -122,26 +140,26 @@ class _HomeState extends State<Home> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection("Postagem")
-                      .orderBy("data e hora", descending: true)
-                      .snapshots(),
+              StreamBuilder(
+                  stream: _controller.stream,
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
+                    QuerySnapshot<Object?>? querySnapshot = snapshot.data;
                     if (snapshot.hasData) {
-                      final snap = snapshot.data!.docs;
                       return ListView.builder(
                         shrinkWrap: true,
                         primary: false,
-                        itemCount: snap.length,
+                        itemCount: querySnapshot!.docs.length,
                         itemBuilder: (context, index) {
+                          List<DocumentSnapshot> postagem =
+                              querySnapshot.docs.toList();
+                          DocumentSnapshot item = postagem[index];
                           return Column(children: [
                             Container(
                               margin: const EdgeInsets.all(5),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                _statusLogin!,
+                                item[index]['nome'],
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -152,38 +170,27 @@ class _HomeState extends State<Home> {
                               margin: const EdgeInsets.all(5),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "Nome Popular: ${snap[index]['nome']}",
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                "${item[index]['descricao']}",
                               ),
                             ),
                             Container(
                               margin: const EdgeInsets.all(5),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "Descrição: ${snap[index]['descricao']}",
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.all(5),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "${snap[index]['tipo']}",
+                                "${item[index]['tipo']}",
                               ),
                             ),
                             Container(
                               margin: const EdgeInsets.all(20),
                               alignment: Alignment.center,
                               child: Image.network(
-                                snap[index]['foto'],
+                                item[index]['foto'],
                               ),
                             ),
                             Container(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "Data: ${snap[index]['data e hora']}",
+                                  "Data: ${item[index]['data e hora']}",
                                 )),
                             Row(
                               children: [
@@ -195,7 +202,7 @@ class _HomeState extends State<Home> {
                                 Container(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      snap[index]['like'].toString(),
+                                      item[index]['like'].toString(),
                                     )),
                                 IconButton(
                                     onPressed: _dislike,
@@ -203,7 +210,7 @@ class _HomeState extends State<Home> {
                                 Container(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      snap[index]['dislike'].toString(),
+                                      item[index]['dislike'].toString(),
                                     )),
                               ],
                             ),

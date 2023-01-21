@@ -1,3 +1,4 @@
+import 'package:bio_if/login.dart';
 import 'package:bio_if/usuario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,6 +33,11 @@ class _CadastroState extends State<Cadastro> {
       setState(() {
         _status = "Usuário criado com sucesso!!";
       });
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Login(),
+          ));
       Usuario user = Usuario(
           id: usuario.user!.uid, nome: nome, email: email, senha: senha);
       db.collection("Usuario").doc(usuario.user!.uid).set(user.toMap());
@@ -43,7 +49,7 @@ class _CadastroState extends State<Cadastro> {
         });
       } else if (e.code == "weak-password") {
         setState(() {
-          _status = "Senha fraca, escolha uma senha mais dificil!!";
+          _status = "Senha fraca!! Sua senha precisa ter 6 caracteres";
         });
       }
     } catch (e) {
@@ -55,7 +61,7 @@ class _CadastroState extends State<Cadastro> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: const Color.fromARGB(255, 04, 82, 37),
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
@@ -87,7 +93,7 @@ class _CadastroState extends State<Cadastro> {
           ElevatedButton(
             onPressed: _cadastrarUsuario,
             style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),
-            child: const Text("Login"),
+            child: const Text("Criar cadastro"),
           ),
           Text(_status!),
         ]),

@@ -2,13 +2,17 @@ import 'dart:io';
 
 import 'package:bio_if/postagem.dart';
 import 'package:bio_if/sobre.dart';
+import 'package:bio_if/usuario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 import 'ajuda.dart';
+import 'mapa.dart';
 
 /*cadastro das especies
   -nome conhecido da especies
@@ -70,6 +74,19 @@ class _EspeciesState extends State<Especies> {
     }
   }
 
+  _formatarData(String data) {
+    initializeDateFormatting("pt_BR");
+    var formatador = DateFormat.yMd("pt_BR");
+
+    DateTime dataConvertida = DateTime.parse(data);
+
+    return formatador.format(dataConvertida);
+  }
+
+  _adicionarLocal() {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => Mapa()));
+  }
+
   Future _postagem() async {
     FirebaseStorage storage = FirebaseStorage.instance;
     Reference pastaRaiz = storage.ref();
@@ -89,6 +106,10 @@ class _EspeciesState extends State<Especies> {
         setState(() {
           _status = "Postagem realizada com sucesso";
         });
+      } else if (taskSnapshot.state == TaskState.error) {
+        setState(() {
+          _status = "Erro. Tente novamente";
+        });
       }
     });
   }
@@ -107,7 +128,7 @@ class _EspeciesState extends State<Especies> {
         nome: _controllerNome.text,
         descricao: _controllerDescricao.text,
         tipo: _resultado,
-        dataHora: dataHora,
+        dataHora: _formatarData(dataHora!),
         foto: _urlImagem,
         like: contagem,
         dislike: contagem);
@@ -119,7 +140,7 @@ class _EspeciesState extends State<Especies> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: const Color.fromARGB(255, 04, 82, 37),
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
@@ -186,6 +207,13 @@ class _EspeciesState extends State<Especies> {
                     },
                   ),
                 ],
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _adicionarLocal();
+                },
+                child: Text("Adicionar Localização"),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),
               ),
               ElevatedButton(
                 //tem que pegar a localização e a data

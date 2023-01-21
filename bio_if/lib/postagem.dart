@@ -20,8 +20,6 @@ class Postagem {
 
   Map<String, dynamic> toMap() {
     return {
-      //if (id != null) "id": id,
-
       if (nome != null) "nome": nome,
       if (descricao != null) "descricao": descricao,
       if (tipo != null) "tipo": tipo,

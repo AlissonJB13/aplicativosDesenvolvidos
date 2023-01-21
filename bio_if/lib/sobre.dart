@@ -13,7 +13,7 @@ class _SobreState extends State<Sobre> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: const Color.fromARGB(255, 04, 82, 37),
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
