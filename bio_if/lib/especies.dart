@@ -93,30 +93,36 @@ class _EspeciesState extends State<Especies> {
   }
 
   Future _postagem() async {
-    FirebaseStorage storage = FirebaseStorage.instance;
-    Reference pastaRaiz = storage.ref();
-    Reference arquivo = pastaRaiz
-        .child("fotos")
-        .child(DateTime.now().millisecondsSinceEpoch.toString());
+    if (UsuarioAtual().currentUser == null) {
+      setState(() {
+        _status = "Para fazer postagens você precisa estar logado";
+      });
+    } else {
+      FirebaseStorage storage = FirebaseStorage.instance;
+      Reference pastaRaiz = storage.ref();
+      Reference arquivo = pastaRaiz
+          .child("fotos")
+          .child(DateTime.now().millisecondsSinceEpoch.toString());
 
-    UploadTask task = arquivo.putFile(File(_arquivoImagem!.path));
+      UploadTask task = arquivo.putFile(File(_arquivoImagem!.path));
 
-    task.snapshotEvents.listen((TaskSnapshot taskSnapshot) {
-      if (taskSnapshot.state == TaskState.running) {
-        setState(() {
-          _status = "Realizando postagem";
-        });
-      } else if (taskSnapshot.state == TaskState.success) {
-        _recuperarImagem(taskSnapshot);
-        setState(() {
-          _status = "Postagem realizada com sucesso";
-        });
-      } else if (taskSnapshot.state == TaskState.error) {
-        setState(() {
-          _status = "Erro. Tente novamente";
-        });
-      }
-    });
+      task.snapshotEvents.listen((TaskSnapshot taskSnapshot) {
+        if (taskSnapshot.state == TaskState.running) {
+          setState(() {
+            _status = "Realizando postagem";
+          });
+        } else if (taskSnapshot.state == TaskState.success) {
+          _recuperarImagem(taskSnapshot);
+          setState(() {
+            _status = "Postagem realizada com sucesso";
+          });
+        } else if (taskSnapshot.state == TaskState.error) {
+          setState(() {
+            _status = "Erro. Tente novamente";
+          });
+        }
+      });
+    }
   }
 
   Future _recuperarImagem(TaskSnapshot taskSnapshot) async {
