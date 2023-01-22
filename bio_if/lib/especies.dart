@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:bio_if/postagem.dart';
 import 'package:bio_if/sobre.dart';
 import 'package:bio_if/usuario.dart';
+import 'package:bio_if/usuarioatual.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +26,7 @@ import 'mapa.dart';
   -likes e deslikes
   -usuario que publicou
 */
+
 class Especies extends StatefulWidget {
   const Especies({super.key});
 
@@ -37,11 +40,13 @@ class _EspeciesState extends State<Especies> {
   String? _campoSelecionado = "";
   String _resultado = "";
   XFile? _arquivoImagem;
+  String? _local;
   String? dataHora = DateTime.now().toString();
   var db = FirebaseFirestore.instance;
   String? _urlImagem = null;
   String? _status = "Postagem não realizada";
   int? contagem = 0;
+  String? nomeUsuario = "";
 
   Future _capturaFoto(bool daCamera) async {
     final ImagePicker picker = ImagePicker();
@@ -125,6 +130,7 @@ class _EspeciesState extends State<Especies> {
     _selecao();
 
     Postagem postagem = Postagem(
+        nomeusuario: UsuarioAtual().currentUser?.email,
         nome: _controllerNome.text,
         descricao: _controllerDescricao.text,
         tipo: _resultado,
@@ -158,11 +164,17 @@ class _EspeciesState extends State<Especies> {
                 ),
                 controller: _controllerNome,
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: "Descrição",
+              ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxHeight: 150,
                 ),
-                controller: _controllerDescricao,
+                child: TextFormField(
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    hintText: "Descrição",
+                  ),
+                  controller: _controllerDescricao,
+                ),
               ),
               //Row(children: [
               const Text("Tipo da Espécie:"),
@@ -213,14 +225,16 @@ class _EspeciesState extends State<Especies> {
                   _adicionarLocal();
                 },
                 child: Text("Adicionar Localização"),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 04, 82, 37)),
               ),
               ElevatedButton(
                 //tem que pegar a localização e a data
                 onPressed: () {
                   _postagem();
                 },
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 04, 82, 37)),
                 child: const Text("Enviar"),
               ),
               Text(_status!),

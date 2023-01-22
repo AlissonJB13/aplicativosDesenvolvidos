@@ -1,4 +1,5 @@
 import 'package:bio_if/home.dart';
+import 'package:bio_if/usuarioatual.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'cadastro.dart';
@@ -48,6 +49,16 @@ class _LoginState extends State<Login> {
     }
   }
 
+  void _logOut() async {
+// fazer o try catch com mensagens personalizadas do logout
+    await FirebaseAuth.instance.signOut();
+    /*try {
+      
+    } on FirebaseAuthException catch (e) {
+      
+    }*/
+  }
+
   void _telaCadastro() {
     Navigator.push(
         context,
@@ -81,14 +92,27 @@ class _LoginState extends State<Login> {
                   ),
                   controller: _controllerSenha,
                 ),
-                ElevatedButton(
-                    onPressed: _Login,
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.teal),
-                    child: Text("Login")),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: ElevatedButton(
+                      onPressed: _Login,
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 04, 82, 37)),
+                      child: Text("Login")),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: ElevatedButton(
+                    onPressed: _logOut,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 04, 82, 37)),
+                    child: Text("Sair"),
+                  ),
+                ),
                 Text(_status!),
                 Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(2),
                   child: TextButton(
                       onPressed: _telaCadastro,
                       child: const Text("Não tem cadastro? Clique aqui")),

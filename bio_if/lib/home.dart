@@ -6,6 +6,7 @@ import 'package:bio_if/especies.dart';
 import 'package:bio_if/postagem.dart';
 import 'package:bio_if/sobre.dart';
 import 'package:bio_if/login.dart';
+import 'package:bio_if/usuarioatual.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -64,25 +65,6 @@ class _HomeState extends State<Home> {
   }
 
   //nao ta funcionando
-  Future _usuarioAtual() async {
-    var auth = FirebaseAuth.instance;
-
-    try {
-      var usuarioAtual = await auth.currentUser;
-      if (usuarioAtual != null) {
-        setState(() {
-          _statusLogin = "${usuarioAtual.displayName}";
-        });
-      }
-      print("${usuarioAtual!.email}");
-    } catch (e) {
-      setState(() {
-        _statusLogin = "Usuário não logado";
-      });
-    }
-  }
-
-  //nao ta funcionando
   Future _like() async {
     db.collection("Postagem").doc().update({"like": FieldValue.increment(1)});
   }
@@ -95,6 +77,18 @@ class _HomeState extends State<Home> {
         .update({"dislike": FieldValue.increment(1)});
   }
 
+  /*void usuarioLogado() {
+    if (UsuarioAtual().currentUser!.email == null) {
+      setState(() {
+        _statusLogin = "Usuário não logado";
+      });
+    } else {
+      setState(() {
+        _statusLogin = "${UsuarioAtual().currentUser!.email}";
+      });
+    }
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +97,8 @@ class _HomeState extends State<Home> {
           iconTheme: const IconThemeData(
             color: Colors.white,
           ),
-          title: Text("Bio IF - $_statusLogin!"),
+          title: Text("Bio IF"),
+          /*${UsuarioAtual().currentUser!.email}),*/
           /*Image.asset(
           'imagens/logo.png',
           height: 22,
@@ -141,7 +136,7 @@ class _HomeState extends State<Home> {
                               margin: const EdgeInsets.all(5),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                _statusLogin!,
+                                "Usuário: ${snap[index]['nome usuario']}",
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,

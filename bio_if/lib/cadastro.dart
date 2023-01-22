@@ -92,7 +92,8 @@ class _CadastroState extends State<Cadastro> {
           ),
           ElevatedButton(
             onPressed: _cadastrarUsuario,
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 04, 82, 37)),
             child: const Text("Criar cadastro"),
           ),
           Text(_status!),

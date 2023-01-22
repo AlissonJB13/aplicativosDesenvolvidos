@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Postagem {
+  String? nomeusuario;
   String? nome;
   String? descricao;
   String? tipo;
@@ -10,7 +11,8 @@ class Postagem {
   int? dislike;
 
   Postagem(
-      {this.nome,
+      {this.nomeusuario,
+      this.nome,
       this.descricao,
       this.tipo,
       this.dataHora,
@@ -20,6 +22,7 @@ class Postagem {
 
   Map<String, dynamic> toMap() {
     return {
+      if (nomeusuario != null) "nome usuario": nomeusuario,
       if (nome != null) "nome": nome,
       if (descricao != null) "descricao": descricao,
       if (tipo != null) "tipo": tipo,
@@ -31,7 +34,8 @@ class Postagem {
   }
 
   Postagem.fromJson(Map<String, dynamic> json)
-      : nome = json["nome"],
+      : nomeusuario = json["nome usuario"],
+        nome = json["nome"],
         descricao = json["descricao"],
         tipo = json["tipo"],
         dataHora = json["data e hora"],
