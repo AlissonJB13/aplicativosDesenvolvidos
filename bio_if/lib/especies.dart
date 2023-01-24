@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -91,6 +92,8 @@ class _EspeciesState extends State<Especies> {
   _adicionarLocal() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => Mapa()));
   }
+
+  _pegarlocalizacao() async {}
 
   Future _postagem() async {
     if (UsuarioAtual().currentUser == null) {

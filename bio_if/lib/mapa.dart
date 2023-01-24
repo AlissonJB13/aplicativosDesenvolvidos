@@ -17,6 +17,8 @@ class _MapaState extends State<Mapa> {
 
   Set<Marker> _marcadores = {};
 
+  String? _LatLongStr = "";
+
   CameraPosition _posicaoCamera = const CameraPosition(
       target: LatLng(-26.495975456403446, -51.98644265758413), zoom: 18);
 
@@ -66,6 +68,10 @@ class _MapaState extends State<Mapa> {
         _posicaoCamera = CameraPosition(
             target: LatLng(position.latitude, position.longitude), zoom: 15);
         _movimentarCamera();
+        setState(() {
+          _LatLongStr =
+              LatLng(position.latitude, position.longitude).toString();
+        });
       });
     });
   }

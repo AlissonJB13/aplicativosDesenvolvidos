@@ -14,8 +14,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerSenha = TextEditingController();
-  String? _status = "";
-  String? _statusUsuario = "";
+  String? _status = "Usuário não logado";
+  //String? _statusUsuario = "Usuário não logado";
 
   Future _Login() async {
     var auth = FirebaseAuth.instance;
@@ -25,16 +25,10 @@ class _LoginState extends State<Login> {
     try {
       var usuario =
           await auth.signInWithEmailAndPassword(email: email, password: senha);
-      var usuarioAtual = await auth.currentUser;
       setState(() {
-        _status = "Login realizado com sucesso";
-        _statusUsuario = "${usuarioAtual?.email}";
+        _status =
+            "Login realizado com sucesso. Usuário logado: ${UsuarioAtual().currentUser!.email}";
       });
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Home(),
-          ));
     } on FirebaseAuthException catch (e) {
       print(e.code);
       if (e.code == "invalid-email") {
