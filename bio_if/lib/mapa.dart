@@ -1,3 +1,4 @@
+import 'package:bio_if/especies.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -42,7 +43,14 @@ class _MapaState extends State<Mapa> {
 
       setState(() {
         _marcadores.add(marcador);
+        _LatLongStr = "Lat ${latLng.latitude} - Lng ${latLng.longitude}";
       });
+
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Especies(_LatLongStr.toString())));
     }
   }
 
@@ -68,10 +76,6 @@ class _MapaState extends State<Mapa> {
         _posicaoCamera = CameraPosition(
             target: LatLng(position.latitude, position.longitude), zoom: 15);
         _movimentarCamera();
-        setState(() {
-          _LatLongStr =
-              LatLng(position.latitude, position.longitude).toString();
-        });
       });
     });
   }

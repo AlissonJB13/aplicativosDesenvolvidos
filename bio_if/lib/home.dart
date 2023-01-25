@@ -25,6 +25,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var db = FirebaseFirestore.instance;
+  String latlong = "";
   String? _statusLogin = "";
   List<String> itensMenu = [
     "Login",
@@ -46,8 +47,8 @@ class _HomeState extends State<Home> {
             context, MaterialPageRoute(builder: (context) => const Cadastro()));
         break;
       case "Cadastro de Espécies":
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Especies()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Especies(latlong)));
         break;
       case "Sobre":
         Navigator.push(
@@ -148,6 +149,17 @@ class _HomeState extends State<Home> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 "Nome Popular: ${snap[index]['nome']}",
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.all(5),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Localização: ${snap[index]['localizacao']}",
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,

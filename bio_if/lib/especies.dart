@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bio_if/home.dart';
 import 'package:bio_if/postagem.dart';
 import 'package:bio_if/sobre.dart';
 import 'package:bio_if/usuario.dart';
@@ -15,6 +16,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import 'ajuda.dart';
+import 'cadastro.dart';
+import 'login.dart';
 import 'mapa.dart';
 
 /*cadastro das especies
@@ -29,7 +32,9 @@ import 'mapa.dart';
 */
 
 class Especies extends StatefulWidget {
-  const Especies({super.key});
+  String LatLongStr;
+  Especies(this.LatLongStr, {super.key});
+  //Especies(this.LatLongStr, {super.key});
 
   @override
   State<Especies> createState() => _EspeciesState();
@@ -41,7 +46,6 @@ class _EspeciesState extends State<Especies> {
   String? _campoSelecionado = "";
   String _resultado = "";
   XFile? _arquivoImagem;
-  String? _local;
   String? dataHora = DateTime.now().toString();
   var db = FirebaseFirestore.instance;
   String? _urlImagem = null;
@@ -145,6 +149,7 @@ class _EspeciesState extends State<Especies> {
         tipo: _resultado,
         dataHora: _formatarData(dataHora!),
         foto: _urlImagem,
+        localizacao: widget.LatLongStr,
         like: contagem,
         dislike: contagem);
 
@@ -159,14 +164,27 @@ class _EspeciesState extends State<Especies> {
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
-        title: const Text("Cadastro de Espécies"),
+        title: const Text("Cadastro das Espécies"),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              //const Text("Cadastro de Espécies"),
+              const Text(
+                "Cadastro de Espécies",
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _adicionarLocal();
+                },
+                child: Text("Adicionar Localização"),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 04, 82, 37)),
+              ),
               TextFormField(
                 decoration: const InputDecoration(
                   hintText: "Nome Popular",
@@ -228,14 +246,6 @@ class _EspeciesState extends State<Especies> {
                     },
                   ),
                 ],
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  _adicionarLocal();
-                },
-                child: Text("Adicionar Localização"),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 04, 82, 37)),
               ),
               ElevatedButton(
                 //tem que pegar a localização e a data

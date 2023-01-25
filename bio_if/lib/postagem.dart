@@ -7,6 +7,7 @@ class Postagem {
   String? tipo;
   String? dataHora;
   String? foto;
+  String? localizacao;
   int? like;
   int? dislike;
 
@@ -17,6 +18,7 @@ class Postagem {
       this.tipo,
       this.dataHora,
       this.foto,
+      this.localizacao,
       this.like,
       this.dislike});
 
@@ -28,6 +30,7 @@ class Postagem {
       if (tipo != null) "tipo": tipo,
       if (dataHora != null) "data e hora": dataHora,
       if (foto != null) "foto": foto,
+      if (localizacao != null) "localizacao": localizacao,
       if (like != null) "like": like,
       if (dislike != null) "dislike": dislike
     };
@@ -39,7 +42,10 @@ class Postagem {
         descricao = json["descricao"],
         tipo = json["tipo"],
         dataHora = json["data e hora"],
-        foto = json["foto"];
+        foto = json["foto"],
+        localizacao = json["localizacao"],
+        like = json["like"],
+        dislike = json["dislike"];
 
   //trazer dados que esta gravado na colecao do firebase
   factory Postagem.fromDocument(DocumentSnapshot doc) {

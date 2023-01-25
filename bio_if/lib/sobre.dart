@@ -39,7 +39,7 @@ class _SobreState extends State<Sobre> {
             const Padding(
               padding: EdgeInsets.all(12),
               child: Text(
-                "Você também pode registrar a localização em que a imagem foi capturada utilizando o GPS do seu dispositivo móvel.",
+                "Você também pode registrar a localização em que a imagem foi capturada utilizando o GPS do seu dispositivo móvel, clicando no botão ADICIONAR LOCALIZAÇÃO e mantendo pressionado por um tempo a localização correta no mapa.",
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.justify,
               ),
